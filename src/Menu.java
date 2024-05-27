@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Menu implements ActionListener{
+public class Menu implements ActionListener {
     private JMenuBar appMenu;
 
     private JMenu fileMenu;
@@ -18,50 +18,56 @@ public class Menu implements ActionListener{
     private JMenuItem clear;
 
 
-
-    public Menu(){
+    public Menu() {
         appMenu = new JMenuBar();
         appMenu.add(fileMenu());
         appMenu.add(drawMenu());
     }
 
-    public JMenu fileMenu(){
+    public JMenu fileMenu() {
         fileMenu = new JMenu("File");
 
-        open = new JMenuItem("Open");
-        save = new JMenuItem("Save");
-        saveAs = new JMenuItem("Save As...");
-        quit = new JMenuItem("Quit");
+        open = JMenuItemFactory.open(this);
+        save = JMenuItemFactory.save(this);
+        saveAs = JMenuItemFactory.saveAs(this);
+        quit = JMenuItemFactory.quit(this);
 
+        JMenuItem[] fileButtonTab = {open, save, saveAs, quit};
 
-        fileMenu.add(open);
-        fileMenu.add(save);
-        fileMenu.add(saveAs);
-        fileMenu.add(quit);
+        addToMenu(fileMenu, fileButtonTab);
 
         return fileMenu;
     }
 
-    public JMenu drawMenu(){
+    public JMenu drawMenu() {
         drawMenu = new JMenu("Draw");
 
-        figure = new JMenuItem("Figure");
-        color = new JMenuItem("Color");
-        clear = new JMenuItem("CLear");
+        figure = JMenuItemFactory.figure(this);
+        color = JMenuItemFactory.color(this);
+        clear = JMenuItemFactory.clear(this);
 
-        drawMenu.add(figure);
-        drawMenu.add(color);
-        drawMenu.add(clear);
+        JMenuItem[] fileButtonTab = {figure, color, clear};
+
+        addToMenu(drawMenu, fileButtonTab);
 
         return drawMenu;
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-
+        if (actionEvent.getSource() == open) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.showOpenDialog(null);
+        }
     }
 
     public JMenuBar getAppMenu() {
         return appMenu;
+    }
+
+    public void addToMenu(JMenu menu, JMenuItem[] tab) {
+        for (JMenuItem j : tab) {
+            menu.add(j);
+        }
     }
 }
