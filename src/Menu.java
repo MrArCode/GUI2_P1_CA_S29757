@@ -53,14 +53,6 @@ public class Menu implements ActionListener {
         return drawMenu;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == open) {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.showOpenDialog(null);
-        }
-    }
-
     public JMenuBar getAppMenu() {
         return appMenu;
     }
@@ -68,6 +60,15 @@ public class Menu implements ActionListener {
     public void addToMenu(JMenu menu, JMenuItem[] tab) {
         for (JMenuItem j : tab) {
             menu.add(j);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == open){
+            System.out.println("open");
+        }else if (e.getSource() == quit) {
+            System.exit(0);
         }
     }
 }

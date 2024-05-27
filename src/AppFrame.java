@@ -10,8 +10,7 @@ public class AppFrame {
         Menu menu = new Menu();
         appFrame.setJMenuBar(menu.getAppMenu());
 
-        DrawPanel drawPanel = new DrawPanel();
-        appFrame.add(drawPanel.getDrawPanel());
+        appFrame.add(new DrawPanel());
 
         ToolBar toolBar = new ToolBar();
         appFrame.add(toolBar.getToolBar(), BorderLayout.SOUTH);
@@ -25,6 +24,7 @@ public class AppFrame {
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.setResizable(false);
         return frame;
     }
 }
