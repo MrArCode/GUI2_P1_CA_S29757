@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class Menu implements ActionListener {
     private JMenuBar appMenu;
@@ -26,6 +27,7 @@ public class Menu implements ActionListener {
 
     public JMenu fileMenu() {
         fileMenu = new JMenu("File");
+        fileMenu.setMnemonic(KeyEvent.VK_F);
 
         open = JMenuItemFactory.open(this);
         save = JMenuItemFactory.save(this);
@@ -41,6 +43,7 @@ public class Menu implements ActionListener {
 
     public JMenu drawMenu() {
         drawMenu = new JMenu("Draw");
+        drawMenu.setMnemonic(KeyEvent.VK_D);
 
         figure = JMenuItemFactory.figure(this);
         color = JMenuItemFactory.color(this);
