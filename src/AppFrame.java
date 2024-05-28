@@ -1,18 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class AppFrame {
+public class AppFrame implements ActionListener {
     JFrame appFrame;
+    Menu menu;
+    ToolBar toolBar;
 
     public AppFrame() {
         appFrame = createFrame();
 
-        Menu menu = new Menu();
+        menu = new Menu(this);
         appFrame.setJMenuBar(menu.getAppMenu());
 
         appFrame.add(new DrawPanel());
 
-        ToolBar toolBar = new ToolBar();
+        toolBar = new ToolBar();
         appFrame.add(toolBar.getToolBar(), BorderLayout.SOUTH);
 
 
@@ -26,5 +30,16 @@ public class AppFrame {
         frame.setVisible(true);
         frame.setResizable(false);
         return frame;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == menu.getCircle()){
+            toolBar.setjTextFieldLeft("Circle");
+        } else if (actionEvent.getSource() == menu.getSquare()) {
+            toolBar.setjTextFieldLeft("Square");
+        } else if(actionEvent.getSource() == menu.getPen()){
+            toolBar.setjTextFieldLeft("Pen");
+        }
     }
 }

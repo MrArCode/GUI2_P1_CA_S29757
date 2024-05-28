@@ -5,7 +5,7 @@ import java.security.Key;
 public class JMenuItemFactory {
 
 
-    public static JMenuItem open(Menu menu) {
+    public static JMenuItem open(AppFrame menu) {
         JMenuItem open = new JMenuItem("Open");
         open.addActionListener(menu);
         open.setMnemonic(KeyEvent.VK_O);
@@ -15,7 +15,7 @@ public class JMenuItemFactory {
 
     }
 
-    public static JMenuItem save(Menu menu) {
+    public static JMenuItem save(AppFrame menu) {
         JMenuItem save = new JMenuItem("Save");
         save.addActionListener(menu);
         save.setMnemonic(KeyEvent.VK_S);
@@ -26,7 +26,7 @@ public class JMenuItemFactory {
 
     }
 
-    public static JMenuItem saveAs(Menu menu) {
+    public static JMenuItem saveAs(AppFrame menu) {
         JMenuItem saveAs = new JMenuItem("Save As...");
         saveAs.addActionListener(menu);
         saveAs.setMnemonic(KeyEvent.VK_A);
@@ -36,7 +36,7 @@ public class JMenuItemFactory {
 
     }
 
-    public static JMenuItem quit(Menu menu) {
+    public static JMenuItem quit(AppFrame menu) {
         JMenuItem quit = new JMenuItem("Quit");
         quit.addActionListener(menu);
         quit.setMnemonic(KeyEvent.VK_Q);
@@ -46,28 +46,14 @@ public class JMenuItemFactory {
 
     }
 
-    public static JMenu figure(Menu menu) {
+    public static JMenu figure(AppFrame menu) {
         JMenu figure = new JMenu("Figure");
         figure.addActionListener(menu);
         figure.setMnemonic(KeyEvent.VK_F);
-
-        JRadioButtonMenuItem circle = circle(menu);
-        JRadioButtonMenuItem square = square(menu);
-        JRadioButtonMenuItem pen = pen(menu);
-
-        figure.add(circle);
-        figure.add(square);
-        figure.add(pen);
-
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(circle);
-        buttonGroup.add(square);
-        buttonGroup.add(pen);
-
         return figure;
 
     }
-    public static JMenuItem color(Menu menu) {
+    public static JMenuItem color(AppFrame menu) {
         JMenuItem color = new JMenuItem("Color");
         color.addActionListener(menu);
         color.setMnemonic(KeyEvent.VK_C);
@@ -76,7 +62,7 @@ public class JMenuItemFactory {
         return color;
 
     }
-    public static JMenuItem clear(Menu menu) {
+    public static JMenuItem clear(AppFrame menu) {
         JMenuItem clear = new JMenuItem("Clear");
         clear.addActionListener(menu);
         clear.setMnemonic(KeyEvent.VK_L);
@@ -85,7 +71,7 @@ public class JMenuItemFactory {
         return clear;
 
     }
-    public static JRadioButtonMenuItem circle(Menu menu) {
+    public static JRadioButtonMenuItem circle(AppFrame menu) {
         JRadioButtonMenuItem circle = new JRadioButtonMenuItem("Circle");
         circle.addActionListener(menu);
         circle.setMnemonic(KeyEvent.VK_C);
@@ -94,7 +80,7 @@ public class JMenuItemFactory {
         return circle;
 
     }
-    public static JRadioButtonMenuItem square(Menu menu) {
+    public static JRadioButtonMenuItem square(AppFrame menu) {
         JRadioButtonMenuItem square = new JRadioButtonMenuItem("Square");
         square.addActionListener(menu);
         square.setMnemonic(KeyEvent.VK_R);
@@ -102,7 +88,7 @@ public class JMenuItemFactory {
         square.setAccelerator(squareKeyStroke);
         return square;
     }
-    public static JRadioButtonMenuItem pen(Menu menu) {
+    public static JRadioButtonMenuItem pen(AppFrame menu) {
         JRadioButtonMenuItem pen = new JRadioButtonMenuItem("Pen");
         pen.addActionListener(menu);
         pen.setMnemonic(KeyEvent.VK_P); // Sam dodałem
