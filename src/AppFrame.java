@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class AppFrame implements ActionListener {
     JFrame appFrame;
@@ -34,12 +37,19 @@ public class AppFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == menu.getCircle()){
-            toolBar.setjTextFieldLeft("Circle");
-        } else if (actionEvent.getSource() == menu.getSquare()) {
-            toolBar.setjTextFieldLeft("Square");
-        } else if(actionEvent.getSource() == menu.getPen()){
-            toolBar.setjTextFieldLeft("Pen");
+        // Tworzenie mapy, która mapuje obiekty na akcje
+        Map<Object, Runnable> actionsMap = new HashMap<>();
+        actionsMap.put(menu.getQuit(), Logic::quit);
+        actionsMap.put(menu.getOpen(), Logic::open);
+
+        // Pobieranie źródła
+        Object source = actionEvent.getSource();
+
+        Runnable action = actionsMap.get(source);
+        if (action != null) {
+            action.run();
+        } else {
+            throw new IllegalStateException("Unexpected value: " + source);
         }
     }
 }
