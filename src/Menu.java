@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,6 +16,10 @@ public class Menu implements ActionListener {
     private JMenuItem figure;
     private JMenuItem color;
     private JMenuItem clear;
+
+    private JRadioButtonMenuItem circle;
+    private JRadioButtonMenuItem square;
+    private JRadioButtonMenuItem pen;
 
 
     public Menu() {
@@ -46,6 +49,19 @@ public class Menu implements ActionListener {
         drawMenu.setMnemonic(KeyEvent.VK_D);
 
         figure = JMenuItemFactory.figure(this);
+//        circle = JMenuItemFactory.circle(this);
+//        square = JMenuItemFactory.square(this);
+//        pen = JMenuItemFactory.pen(this);
+//        ButtonGroup buttonGroup = new ButtonGroup();
+//        buttonGroup.add(circle);
+//        buttonGroup.add(square);
+//        buttonGroup.add(pen);
+//        JMenu figureSubMenu = new JMenu();
+//        figureSubMenu.add(circle);
+//        figureSubMenu.add(square);
+//        figureSubMenu.add(pen);
+//        figure.add(figureSubMenu);
+
         color = JMenuItemFactory.color(this);
         clear = JMenuItemFactory.clear(this);
 

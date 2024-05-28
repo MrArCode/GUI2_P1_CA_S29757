@@ -46,12 +46,23 @@ public class JMenuItemFactory {
 
     }
 
-    public static JMenuItem figure(Menu menu) {
-        JMenuItem figure = new JMenuItem("Figure");
+    public static JMenu figure(Menu menu) {
+        JMenu figure = new JMenu("Figure");
         figure.addActionListener(menu);
         figure.setMnemonic(KeyEvent.VK_F);
 
+        JRadioButtonMenuItem circle = circle(menu);
+        JRadioButtonMenuItem square = square(menu);
+        JRadioButtonMenuItem pen = pen(menu);
 
+        figure.add(circle);
+        figure.add(square);
+        figure.add(pen);
+
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(circle);
+        buttonGroup.add(square);
+        buttonGroup.add(pen);
 
         return figure;
 
@@ -73,5 +84,30 @@ public class JMenuItemFactory {
         clear.setAccelerator(clearKeyStroke);
         return clear;
 
+    }
+    public static JRadioButtonMenuItem circle(Menu menu) {
+        JRadioButtonMenuItem circle = new JRadioButtonMenuItem("Circle");
+        circle.addActionListener(menu);
+        circle.setMnemonic(KeyEvent.VK_C);
+        KeyStroke circleKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK);
+        circle.setAccelerator(circleKeyStroke);
+        return circle;
+
+    }
+    public static JRadioButtonMenuItem square(Menu menu) {
+        JRadioButtonMenuItem square = new JRadioButtonMenuItem("Square");
+        square.addActionListener(menu);
+        square.setMnemonic(KeyEvent.VK_R);
+        KeyStroke squareKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_DOWN_MASK);
+        square.setAccelerator(squareKeyStroke);
+        return square;
+    }
+    public static JRadioButtonMenuItem pen(Menu menu) {
+        JRadioButtonMenuItem pen = new JRadioButtonMenuItem("Pen");
+        pen.addActionListener(menu);
+        pen.setMnemonic(KeyEvent.VK_P); // Sam dodałem
+        KeyStroke penKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_DOWN_MASK);
+        pen.setAccelerator(penKeyStroke);
+        return pen;
     }
 }
