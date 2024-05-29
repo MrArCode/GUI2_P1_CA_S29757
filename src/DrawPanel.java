@@ -7,10 +7,11 @@ import java.util.Random;
 
 public class DrawPanel extends JPanel {
     private WhatIsPainting whatIsPainting = WhatIsPainting.NOTHING;
-    private List<List<Point>> allLines;
-    private List<Point> currentLine;
+    private List<List<MyPoint>> allLines;
+    private List<MyPoint> currentLine;
     private List<ThingToPaint> thingToPaint;
     private List<Object> orderOfPainting;
+    private Color colorOfPen = Color.BLACK;
 
     public DrawPanel() {
         setBackground(Color.WHITE);
@@ -27,7 +28,7 @@ public class DrawPanel extends JPanel {
             public void mousePressed(MouseEvent e) {
                 if (whatIsPainting == WhatIsPainting.LINE) {
                     currentLine = new ArrayList<>(); // Nowa linia
-                    Point startPoint = e.getPoint();
+                    MyPoint startPoint = new MyPoint(e.getX(), e.getY(), colorOfPen); // Użyj koloru z pędzla
                     currentLine.add(startPoint);
                 }
             }
@@ -44,14 +45,13 @@ public class DrawPanel extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (whatIsPainting == WhatIsPainting.LINE) {
-                    Point currentPoint = e.getPoint();
+                    MyPoint currentPoint = new MyPoint(e.getX(), e.getY(), colorOfPen); // Użyj koloru z pędzla
                     currentLine.add(currentPoint);
                     orderOfPainting.add(new ArrayList<>(currentLine)); // Dodaj obecną linię do listy wszystkich linii
                     repaint();
                 }
             }
         });
-
 
         addKeyListener(new KeyAdapter() {
             @Override
@@ -86,17 +86,18 @@ public class DrawPanel extends JPanel {
             if (obj instanceof ThingToPaint) {
                 ((ThingToPaint) obj).draw(g2d);
             } else if (obj instanceof List) {
-                List<Point> line = (List<Point>) obj;
-                g2d.setColor(Color.BLACK);
-                Point previousPoint = line.get(0);
+                List<MyPoint> line = (List<MyPoint>) obj;
+                g2d.setColor(line.get(0).getColor());
+                MyPoint previousPoint = line.get(0);
                 for (int i = 1; i < line.size(); i++) {
-                    Point currentPoint = line.get(i);
+                    MyPoint currentPoint = line.get(i);
                     g2d.drawLine(previousPoint.x, previousPoint.y, currentPoint.x, currentPoint.y);
                     previousPoint = currentPoint;
                 }
             }
         }
     }
+
     public void resetPanel() {
         allLines.clear();
         currentLine.clear();
@@ -116,5 +117,9 @@ public class DrawPanel extends JPanel {
 
     public void setWhatIsPainting(WhatIsPainting whatIsPainting) {
         this.whatIsPainting = whatIsPainting;
+    }
+
+    public void setColorOfPen(Color colorOfPen) {
+        this.colorOfPen = colorOfPen;
     }
 }

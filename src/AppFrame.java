@@ -55,6 +55,11 @@ public class AppFrame implements ActionListener {
         if (actionEvent.getSource() == menu.getClear()){
             drawPanel.resetPanel();
         }
+        if (actionEvent.getSource() == menu.getColor()){
+            Color color = JColorChooser.showDialog(null, "Wybierz kolor", Color.BLACK);
+            drawPanel.setColorOfPen(color);
+
+        }
 
 
 
