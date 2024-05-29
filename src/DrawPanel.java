@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class DrawPanel extends JPanel {
-    private WhatIsPainting whatIsPainting = WhatIsPainting.SQUARE;
+    private WhatIsPainting whatIsPainting = WhatIsPainting.NOTHING;
     private List<List<Point>> allLines;
     private List<Point> currentLine;
     private List<ThingToPaint> thingToPaint;
@@ -25,24 +25,30 @@ public class DrawPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                currentLine = new ArrayList<>(); // Nowa linia
-                Point startPoint = e.getPoint();
-                currentLine.add(startPoint);
+                if (whatIsPainting == WhatIsPainting.LINE) {
+                    currentLine = new ArrayList<>(); // Nowa linia
+                    Point startPoint = e.getPoint();
+                    currentLine.add(startPoint);
+                }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                allLines.add(new ArrayList<>(currentLine)); // Dodaj obecną linię do listy wszystkich linii
-                orderOfPainting.add(new ArrayList<>(currentLine));
+                if (whatIsPainting == WhatIsPainting.LINE) {
+                    allLines.add(new ArrayList<>(currentLine)); // Dodaj obecną linię do listy wszystkich linii
+                    orderOfPainting.add(new ArrayList<>(currentLine));
+                }
             }
         });
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                Point currentPoint = e.getPoint();
-                currentLine.add(currentPoint);
-                orderOfPainting.add(new ArrayList<>(currentLine)); // Dodaj obecną linię do listy wszystkich linii
-                repaint();
+                if (whatIsPainting == WhatIsPainting.LINE) {
+                    Point currentPoint = e.getPoint();
+                    currentLine.add(currentPoint);
+                    orderOfPainting.add(new ArrayList<>(currentLine)); // Dodaj obecną linię do listy wszystkich linii
+                    repaint();
+                }
             }
         });
 
@@ -95,5 +101,13 @@ public class DrawPanel extends JPanel {
     public Color getRandomColor() {
         Random random = new Random();
         return new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+    }
+
+    public WhatIsPainting getWhatIsPainting() {
+        return whatIsPainting;
+    }
+
+    public void setWhatIsPainting(WhatIsPainting whatIsPainting) {
+        this.whatIsPainting = whatIsPainting;
     }
 }

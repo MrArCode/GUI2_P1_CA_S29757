@@ -39,19 +39,18 @@ public class AppFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        // Tworzenie mapy, która mapuje obiekty na akcje
-        Map<Object, Runnable> actionsMap = new HashMap<>();
-        actionsMap.put(menu.getQuit(), Logic::quit);
-        actionsMap.put(menu.getOpen(), Logic::open);
 
-        // Pobieranie źródła
-        Object source = actionEvent.getSource();
-
-        Runnable action = actionsMap.get(source);
-        if (action != null) {
-            action.run();
-        } else {
-            throw new IllegalStateException("Unexpected value: " + source);
+        if (actionEvent.getSource() == menu.getCircle()){
+            Logic.circle(drawPanel);
         }
+        if (actionEvent.getSource() == menu.getSquare()){
+            Logic.square(drawPanel);
+        }
+        if (actionEvent.getSource() == menu.getPen()){
+            Logic.line(drawPanel);
+        }
+
+
+
     }
 }
