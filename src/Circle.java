@@ -1,6 +1,7 @@
 import java.awt.*;
+import java.io.Serializable;
 
-class Circle extends ThingToPaint{
+class Circle extends ThingToPaint {
     private final int diameter = 50; // Stały promień koła
 
     public Circle(int x, int y, Color color) {

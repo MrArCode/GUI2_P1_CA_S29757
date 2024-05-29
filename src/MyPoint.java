@@ -1,6 +1,7 @@
 import java.awt.*;
+import java.io.Serializable;
 
-public class MyPoint extends Point {
+public class MyPoint extends Point implements Serializable {
     private Color color;
 
     public MyPoint(int x, int y, Color color) {

@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -105,6 +107,22 @@ public class DrawPanel extends JPanel {
         orderOfPainting.clear();
         repaint();
     }
+    public void loadPanel(DrawPanel drawPanel, ObjectInputStream loadedPanelRaw) {
+        DrawPanel loadedPanel = null;
+        try {
+            loadedPanel = (DrawPanel) loadedPanelRaw.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        drawPanel.setAllLines(loadedPanel.getAllLines());
+        drawPanel.setCurrentLine(loadedPanel.getCurrentLine());
+        drawPanel.setThingToPaint(loadedPanel.getThingToPaint());
+        drawPanel.setOrderOfPainting(loadedPanel.getOrderOfPainting());
+        repaint();
+    }
 
     public Color getRandomColor() {
         Random random = new Random();
@@ -121,5 +139,41 @@ public class DrawPanel extends JPanel {
 
     public void setColorOfPen(Color colorOfPen) {
         this.colorOfPen = colorOfPen;
+    }
+
+    public List<Object> getOrderOfPainting() {
+        return orderOfPainting;
+    }
+
+    public List<List<MyPoint>> getAllLines() {
+        return allLines;
+    }
+
+    public void setAllLines(List<List<MyPoint>> allLines) {
+        this.allLines = allLines;
+    }
+
+    public List<MyPoint> getCurrentLine() {
+        return currentLine;
+    }
+
+    public void setCurrentLine(List<MyPoint> currentLine) {
+        this.currentLine = currentLine;
+    }
+
+    public List<ThingToPaint> getThingToPaint() {
+        return thingToPaint;
+    }
+
+    public void setThingToPaint(List<ThingToPaint> thingToPaint) {
+        this.thingToPaint = thingToPaint;
+    }
+
+    public void setOrderOfPainting(List<Object> orderOfPainting) {
+        this.orderOfPainting = orderOfPainting;
+    }
+
+    public Color getColorOfPen() {
+        return colorOfPen;
     }
 }

@@ -1,6 +1,7 @@
 import java.awt.*;
+import java.io.Serializable;
 
-public abstract class ThingToPaint {
+public abstract class ThingToPaint implements Serializable {
     private int x;
     private int y;
     private Color color;
