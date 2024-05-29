@@ -42,13 +42,17 @@ public class AppFrame implements ActionListener {
 
         if (actionEvent.getSource() == menu.getCircle()){
             Logic.circle(drawPanel);
+            toolBar.setjTextFieldLeft("Circle");
         }
         if (actionEvent.getSource() == menu.getSquare()){
             Logic.square(drawPanel);
+            toolBar.setjTextFieldLeft("Square");
         }
         if (actionEvent.getSource() == menu.getPen()){
             Logic.line(drawPanel);
+            toolBar.setjTextFieldLeft("Pen");
         }
+
 
 
 
