@@ -10,6 +10,7 @@ public class AppFrame implements ActionListener {
     JFrame appFrame;
     Menu menu;
     ToolBar toolBar;
+    DrawPanel drawPanel;
 
     public AppFrame() {
         appFrame = createFrame();
@@ -17,7 +18,8 @@ public class AppFrame implements ActionListener {
         menu = new Menu(this);
         appFrame.setJMenuBar(menu.getAppMenu());
 
-        appFrame.add(new DrawPanel());
+        drawPanel = new DrawPanel();
+        appFrame.add(drawPanel);
 
         toolBar = new ToolBar();
         appFrame.add(toolBar.getToolBar(), BorderLayout.SOUTH);

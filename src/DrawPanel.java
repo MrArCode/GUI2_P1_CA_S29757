@@ -1,40 +1,32 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class DrawPanel extends JPanel {
-    private int startX, startY;
-    private int endX, endY;
-    private boolean drawingCircle;
+    private java.util.List<Circle> circles;
+    private ThingToPaint thingToPaint = ThingToPaint.NOTHING;
 
     public DrawPanel() {
-        setPreferredSize(new Dimension(400, 400));
-        setBackground(Color.ORANGE);
+//        setPreferredSize(new Dimension(400, 400));
+        setBackground(Color.WHITE);
+        circles = new ArrayList<>();
 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                startX = e.getX();
-                startY = e.getY();
-                endX = startX;
-                endY = startY;
-                drawingCircle = true;
-                repaint(); // Odśwież panel, aby pokazać początkowy punkt koła
-            }
+        setFocusable(true);
+        requestFocusInWindow();
 
+        addKeyListener(new KeyAdapter() {
             @Override
-            public void mouseReleased(MouseEvent e) {
-                drawingCircle = false;
-                repaint(); // Odśwież panel, aby pokazać pełne koło
-            }
-        });
-
-        addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                endX = e.getX();
-                endY = e.getY();
-                repaint(); // Odśwież panel, aby pokazać koło w czasie rysowania
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_F1) {
+                    Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+                    SwingUtilities.convertPointFromScreen(mousePosition, DrawPanel.this);
+                    int circleX = mousePosition.x;
+                    int circleY = mousePosition.y;
+                    Color randomColor = getRandomColor();
+                    circles.add(new Circle(circleX, circleY, randomColor));
+                    repaint();
+                }
             }
         });
     }
@@ -42,13 +34,31 @@ public class DrawPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (drawingCircle) {
-            int diameter = Math.max(Math.abs(endX - startX), Math.abs(endY - startY));
-            int radius = diameter / 2;
-            int centerX = startX < endX ? startX + radius : startX - radius;
-            int centerY = startY < endY ? startY + radius : startY - radius;
-            g.setColor(Color.BLACK);
-            g.drawOval(centerX - radius, centerY - radius, diameter, diameter);
+        for (Circle circle : circles) {
+            circle.draw(g);
         }
+    }
+
+    private class Circle {
+        private int x;
+        private int y;
+        private Color color;
+        private final int diameter = 50; // Stały promień koła
+
+        public Circle(int x, int y, Color color) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+        }
+
+        public void draw(Graphics g) {
+            g.setColor(color);
+            g.fillOval(x - diameter / 2, y - diameter / 2, diameter, diameter);
+        }
+    }
+
+    private Color getRandomColor() {
+        Random rand = new Random();
+        return new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
     }
 }
