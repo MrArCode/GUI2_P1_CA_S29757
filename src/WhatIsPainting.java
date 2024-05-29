@@ -1,4 +1,4 @@
-public enum ThingToPaint {
+public enum WhatIsPainting {
     CIRCLE,
     SQUARE,
     LINE,

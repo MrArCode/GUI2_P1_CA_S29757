@@ -1,19 +1,51 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class DrawPanel extends JPanel {
-    private java.util.List<Circle> circles;
-    private ThingToPaint thingToPaint = ThingToPaint.NOTHING;
+    private WhatIsPainting whatIsPainting = WhatIsPainting.SQUARE;
+    private List<List<Point>> allLines;
+    private List<Point> currentLine;
+    private List<ThingToPaint> thingToPaint;
+    private List<Object> orderOfPainting;
 
     public DrawPanel() {
-//        setPreferredSize(new Dimension(400, 400));
         setBackground(Color.WHITE);
-        circles = new ArrayList<>();
+        allLines = new ArrayList<>();
+        currentLine = new ArrayList<>();
+        thingToPaint = new ArrayList<>();
+        orderOfPainting = new ArrayList<>();
 
         setFocusable(true);
         requestFocusInWindow();
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                currentLine = new ArrayList<>(); // Nowa linia
+                Point startPoint = e.getPoint();
+                currentLine.add(startPoint);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                allLines.add(new ArrayList<>(currentLine)); // Dodaj obecną linię do listy wszystkich linii
+                orderOfPainting.add(new ArrayList<>(currentLine));
+            }
+        });
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Point currentPoint = e.getPoint();
+                currentLine.add(currentPoint);
+                orderOfPainting.add(new ArrayList<>(currentLine)); // Dodaj obecną linię do listy wszystkich linii
+                repaint();
+            }
+        });
+
 
         addKeyListener(new KeyAdapter() {
             @Override
@@ -21,10 +53,18 @@ public class DrawPanel extends JPanel {
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     Point mousePosition = MouseInfo.getPointerInfo().getLocation();
                     SwingUtilities.convertPointFromScreen(mousePosition, DrawPanel.this);
-                    int circleX = mousePosition.x;
-                    int circleY = mousePosition.y;
+                    int shapeX = mousePosition.x;
+                    int shapeY = mousePosition.y;
                     Color randomColor = getRandomColor();
-                    circles.add(new Circle(circleX, circleY, randomColor));
+                    if (whatIsPainting == WhatIsPainting.SQUARE) {
+                        Square square = new Square(shapeX, shapeY, randomColor);
+                        thingToPaint.add(square);
+                        orderOfPainting.add(square);
+                    } else if (whatIsPainting == WhatIsPainting.CIRCLE) {
+                        Circle circle = new Circle(shapeX, shapeY, randomColor);
+                        thingToPaint.add(circle);
+                        orderOfPainting.add(circle);
+                    }
                     repaint();
                 }
             }
@@ -34,31 +74,26 @@ public class DrawPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Circle circle : circles) {
-            circle.draw(g);
+        Graphics2D g2d = (Graphics2D) g;
+
+        for (Object obj : orderOfPainting) {
+            if (obj instanceof ThingToPaint) {
+                ((ThingToPaint) obj).draw(g2d);
+            } else if (obj instanceof List) {
+                List<Point> line = (List<Point>) obj;
+                g2d.setColor(Color.BLACK);
+                Point previousPoint = line.get(0);
+                for (int i = 1; i < line.size(); i++) {
+                    Point currentPoint = line.get(i);
+                    g2d.drawLine(previousPoint.x, previousPoint.y, currentPoint.x, currentPoint.y);
+                    previousPoint = currentPoint;
+                }
+            }
         }
     }
 
-    private class Circle {
-        private int x;
-        private int y;
-        private Color color;
-        private final int diameter = 50; // Stały promień koła
-
-        public Circle(int x, int y, Color color) {
-            this.x = x;
-            this.y = y;
-            this.color = color;
-        }
-
-        public void draw(Graphics g) {
-            g.setColor(color);
-            g.fillOval(x - diameter / 2, y - diameter / 2, diameter, diameter);
-        }
-    }
-
-    private Color getRandomColor() {
-        Random rand = new Random();
-        return new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+    public Color getRandomColor() {
+        Random random = new Random();
+        return new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
     }
 }
