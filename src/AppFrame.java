@@ -52,6 +52,9 @@ public class AppFrame implements ActionListener {
             Logic.line(drawPanel);
             toolBar.setjTextFieldLeft("Pen");
         }
+        if (actionEvent.getSource() == menu.getClear()){
+            drawPanel.resetPanel();
+        }
 
 
 

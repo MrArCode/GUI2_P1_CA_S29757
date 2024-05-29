@@ -97,6 +97,13 @@ public class DrawPanel extends JPanel {
             }
         }
     }
+    public void resetPanel() {
+        allLines.clear();
+        currentLine.clear();
+        thingToPaint.clear();
+        orderOfPainting.clear();
+        repaint();
+    }
 
     public Color getRandomColor() {
         Random random = new Random();
