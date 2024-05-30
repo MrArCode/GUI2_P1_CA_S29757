@@ -16,6 +16,7 @@ public class DrawPanel extends JPanel {
     private Color colorOfPen = Color.BLACK;
     private boolean deleteMode = false;
     private List<ThingToPaint> selectedShapes;
+    private ToolBar toolBar = null;
 
     public DrawPanel() {
         setBackground(Color.WHITE);
@@ -40,6 +41,7 @@ public class DrawPanel extends JPanel {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                toolBar.setjTextFieldRight(State.MODIFIED.getDisplayName());
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     Point mousePosition = MouseInfo.getPointerInfo().getLocation();
                     SwingUtilities.convertPointFromScreen(mousePosition, DrawPanel.this);
@@ -73,6 +75,7 @@ public class DrawPanel extends JPanel {
                                 thingToPaint.remove(shape);
                                 orderOfPainting.remove(shape);
                             }
+                            toolBar.setjTextFieldRight(State.MODIFIED.getDisplayName());
                             selectedShapes.clear();
                             repaint();
                         }
@@ -191,5 +194,13 @@ public class DrawPanel extends JPanel {
 
     public Color getColorOfPen() {
         return colorOfPen;
+    }
+
+    public ToolBar getToolBar() {
+        return toolBar;
+    }
+
+    public void setToolBar(ToolBar toolBar) {
+        this.toolBar = toolBar;
     }
 }

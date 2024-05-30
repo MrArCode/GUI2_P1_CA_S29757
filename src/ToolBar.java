@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class ToolBar {
+public class ToolBar implements Serializable {
     JToolBar toolBar;
     JLabel jTextFieldLeft;
     JLabel jTextFieldRight;

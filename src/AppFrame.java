@@ -24,6 +24,7 @@ public class AppFrame implements ActionListener {
         appFrame.add(drawPanel);
 
         toolBar = new ToolBar();
+        drawPanel.setToolBar(toolBar);
         appFrame.add(toolBar.getToolBar(), BorderLayout.SOUTH);
 
 
@@ -40,6 +41,9 @@ public class AppFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == menu.getQuit()){
+            Logic.quit();
+        }
 
         if (actionEvent.getSource() == menu.getCircle()) {
             Logic.circle(drawPanel);
@@ -74,6 +78,8 @@ public class AppFrame implements ActionListener {
                 File selectedFile = fileChooser.getSelectedFile();
                 // Pobieramy ścieżkę do wybranego pliku
                 filePath = selectedFile.getAbsolutePath();
+                toolBar.setjTextFieldLeft("");
+                toolBar.setjTextFieldRight(State.NEW.getDisplayName());
             } else {
                 System.out.println("Anulowano wybór pliku.");
                 return; // Przerwij działanie metody, jeśli użytkownik anulował wybór pliku
