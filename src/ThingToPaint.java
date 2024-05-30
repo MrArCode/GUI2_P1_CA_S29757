@@ -6,7 +6,6 @@ public abstract class ThingToPaint implements Serializable {
     private int y;
     private Color color;
 
-
     public ThingToPaint(int x, int y, Color color) {
         this.x = x;
         this.y = y;
@@ -14,6 +13,7 @@ public abstract class ThingToPaint implements Serializable {
     }
 
     public abstract void draw(Graphics g);
+    public abstract boolean contains(Point point);
 
     public int getX() {
         return x;

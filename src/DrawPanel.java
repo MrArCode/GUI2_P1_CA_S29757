@@ -14,6 +14,7 @@ public class DrawPanel extends JPanel {
     private List<ThingToPaint> thingToPaint;
     private List<Object> orderOfPainting;
     private Color colorOfPen = Color.BLACK;
+    private boolean deleteMode = false;
 
     public DrawPanel() {
         setBackground(Color.WHITE);
@@ -29,8 +30,8 @@ public class DrawPanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (whatIsPainting == WhatIsPainting.LINE) {
-                    currentLine = new ArrayList<>(); // Nowa linia
-                    MyPoint startPoint = new MyPoint(e.getX(), e.getY(), colorOfPen); // Użyj koloru z pędzla
+                    currentLine = new ArrayList<>(); // New line
+                    MyPoint startPoint = new MyPoint(e.getX(), e.getY(), colorOfPen); // Use pen color
                     currentLine.add(startPoint);
                 }
             }
@@ -38,19 +39,27 @@ public class DrawPanel extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (whatIsPainting == WhatIsPainting.LINE) {
-                    allLines.add(new ArrayList<>(currentLine)); // Dodaj obecną linię do listy wszystkich linii
+                    allLines.add(new ArrayList<>(currentLine)); // Add current line to all lines
                     orderOfPainting.add(new ArrayList<>(currentLine));
                 }
             }
         });
+
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (whatIsPainting == WhatIsPainting.LINE) {
-                    MyPoint currentPoint = new MyPoint(e.getX(), e.getY(), colorOfPen); // Użyj koloru z pędzla
+                    MyPoint currentPoint = new MyPoint(e.getX(), e.getY(), colorOfPen); // Use pen color
                     currentLine.add(currentPoint);
-                    orderOfPainting.add(new ArrayList<>(currentLine)); // Dodaj obecną linię do listy wszystkich linii
+                    orderOfPainting.add(new ArrayList<>(currentLine)); // Add current line to all lines
                     repaint();
+                }
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if (deleteMode) {
+                    deleteShapeIfHovered(e.getPoint());
                 }
             }
         });
@@ -74,6 +83,16 @@ public class DrawPanel extends JPanel {
                         orderOfPainting.add(circle);
                     }
                     repaint();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                    deleteMode = true;
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                    deleteMode = false;
                 }
             }
         });
@@ -99,6 +118,18 @@ public class DrawPanel extends JPanel {
         }
     }
 
+    private void deleteShapeIfHovered(Point point) {
+        for (int i = thingToPaint.size() - 1; i >= 0; i--) {
+            ThingToPaint shape = thingToPaint.get(i);
+            if (shape.contains(point)) {
+                thingToPaint.remove(i);
+                orderOfPainting.remove(shape);
+                repaint();
+                break;
+            }
+        }
+    }
+
     public void resetPanel() {
         allLines.clear();
         currentLine.clear();
@@ -106,6 +137,7 @@ public class DrawPanel extends JPanel {
         orderOfPainting.clear();
         repaint();
     }
+
     public void loadPanel(DrawPanel drawPanel, ObjectInputStream loadedPanelRaw) {
         DrawPanel loadedPanel = null;
         try {
