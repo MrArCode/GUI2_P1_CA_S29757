@@ -15,6 +15,7 @@ public class DrawPanel extends JPanel {
     private List<Object> orderOfPainting;
     private Color colorOfPen = Color.BLACK;
     private boolean deleteMode = false;
+    private List<ThingToPaint> selectedShapes;
 
     public DrawPanel() {
         setBackground(Color.WHITE);
@@ -22,6 +23,7 @@ public class DrawPanel extends JPanel {
         currentLine = new ArrayList<>();
         thingToPaint = new ArrayList<>();
         orderOfPainting = new ArrayList<>();
+        selectedShapes = new ArrayList<>();
 
         setFocusable(true);
         requestFocusInWindow();
@@ -29,37 +31,8 @@ public class DrawPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (whatIsPainting == WhatIsPainting.LINE) {
-                    currentLine = new ArrayList<>(); // New line
-                    MyPoint startPoint = new MyPoint(e.getX(), e.getY(), colorOfPen); // Use pen color
-                    currentLine.add(startPoint);
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (whatIsPainting == WhatIsPainting.LINE) {
-                    allLines.add(new ArrayList<>(currentLine)); // Add current line to all lines
-                    orderOfPainting.add(new ArrayList<>(currentLine));
-                }
-            }
-        });
-
-        addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                if (whatIsPainting == WhatIsPainting.LINE) {
-                    MyPoint currentPoint = new MyPoint(e.getX(), e.getY(), colorOfPen); // Use pen color
-                    currentLine.add(currentPoint);
-                    orderOfPainting.add(new ArrayList<>(currentLine)); // Add current line to all lines
-                    repaint();
-                }
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
                 if (deleteMode) {
-                    deleteShapeIfHovered(e.getPoint());
+                    selectShapeIfClicked(e.getPoint());
                 }
             }
         });
@@ -93,6 +66,17 @@ public class DrawPanel extends JPanel {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_D) {
                     deleteMode = false;
+                    if (!selectedShapes.isEmpty()) {
+                        int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to erase selected figures?", "Erase figures", JOptionPane.YES_NO_OPTION);
+                        if (dialogResult == JOptionPane.YES_OPTION) {
+                            for (ThingToPaint shape : selectedShapes) {
+                                thingToPaint.remove(shape);
+                                orderOfPainting.remove(shape);
+                            }
+                            selectedShapes.clear();
+                            repaint();
+                        }
+                    }
                 }
             }
         });
@@ -118,14 +102,14 @@ public class DrawPanel extends JPanel {
         }
     }
 
-    private void deleteShapeIfHovered(Point point) {
-        for (int i = thingToPaint.size() - 1; i >= 0; i--) {
-            ThingToPaint shape = thingToPaint.get(i);
+    private void selectShapeIfClicked(Point point) {
+        for (ThingToPaint shape : thingToPaint) {
             if (shape.contains(point)) {
-                thingToPaint.remove(i);
-                orderOfPainting.remove(shape);
-                repaint();
-                break;
+                if (!selectedShapes.contains(shape)) {
+                    selectedShapes.add(shape);
+                    repaint();
+                }
+                return;
             }
         }
     }
@@ -135,6 +119,7 @@ public class DrawPanel extends JPanel {
         currentLine.clear();
         thingToPaint.clear();
         orderOfPainting.clear();
+        selectedShapes.clear();
         repaint();
     }
 
