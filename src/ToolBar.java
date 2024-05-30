@@ -13,6 +13,7 @@ public class ToolBar {
         jTextFieldRight = new JLabel();
         toolBar.add(jTextFieldLeft, BorderLayout.WEST);
         toolBar.add(jTextFieldRight, BorderLayout.EAST);
+        jTextFieldRight.setText(State.NEW.getDisplayName());
     }
 
     public JToolBar getToolBar() {
