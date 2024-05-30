@@ -80,6 +80,7 @@ public class AppFrame implements ActionListener {
                 filePath = selectedFile.getAbsolutePath();
                 toolBar.setjTextFieldLeft("");
                 toolBar.setjTextFieldRight(State.NEW.getDisplayName());
+                appFrame.setTitle("Simple Draw: " + selectedFile.getName());
             } else {
                 System.out.println("Anulowano wybór pliku.");
                 return; // Przerwij działanie metody, jeśli użytkownik anulował wybór pliku
@@ -105,6 +106,7 @@ public class AppFrame implements ActionListener {
                     File selectedFile = fileChooser.getSelectedFile();
                     // Pobieramy ścieżkę do wybranego pliku
                     filePath = selectedFile.getAbsolutePath();
+                    appFrame.setTitle("Simple Draw: " + selectedFile.getName());
                 } else {
                     System.out.println("Anulowano wybór pliku.");
                     return; // Przerwij działanie metody, jeśli użytkownik anulował wybór pliku
@@ -113,6 +115,7 @@ public class AppFrame implements ActionListener {
                 try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
                     oos.writeObject(drawPanel);
                     toolBar.setjTextFieldRight(State.SAVED.getDisplayName());
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -140,6 +143,7 @@ public class AppFrame implements ActionListener {
                 File selectedFile = fileChooser.getSelectedFile();
                 // Pobieramy ścieżkę do wybranego pliku
                 filePath = selectedFile.getAbsolutePath();
+                appFrame.setTitle("Simple Draw: " + selectedFile.getName());
             } else {
                 System.out.println("Anulowano wybór pliku.");
                 return; // Przerwij działanie metody, jeśli użytkownik anulował wybór pliku
@@ -147,7 +151,7 @@ public class AppFrame implements ActionListener {
 
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
                 oos.writeObject(drawPanel);
-                System.out.println("Object saved to file.");
+                toolBar.setjTextFieldRight(State.SAVED.getDisplayName());
             } catch (IOException e) {
                 e.printStackTrace();
             }
