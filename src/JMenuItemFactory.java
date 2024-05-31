@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.security.Key;
 
 public class JMenuItemFactory {
 
@@ -91,7 +90,7 @@ public class JMenuItemFactory {
     public static JRadioButtonMenuItem pen(AppFrame menu) {
         JRadioButtonMenuItem pen = new JRadioButtonMenuItem("Pen");
         pen.addActionListener(menu);
-        pen.setMnemonic(KeyEvent.VK_P); // Sam dodałem
+        pen.setMnemonic(KeyEvent.VK_P);
         KeyStroke penKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_DOWN_MASK);
         pen.setAccelerator(penKeyStroke);
         return pen;

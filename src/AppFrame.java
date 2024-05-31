@@ -42,57 +42,8 @@ public class AppFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == menu.getOpen()) {
-            // Tworzymy nowy obiekt JFileChooser
-            JFileChooser fileChooser = new JFileChooser();
-            filePath = "";
-
-            // Wyświetlamy okno dialogowe do wyboru pliku
-            int result = fileChooser.showOpenDialog(null);
-
-            // Sprawdzamy, czy użytkownik wybrał plik
-            if (result == JFileChooser.APPROVE_OPTION) {
-                // Pobieramy wybrany plik jako obiekt File
-                File selectedFile = fileChooser.getSelectedFile();
-                // Pobieramy ścieżkę do wybranego pliku
-                filePath = selectedFile.getAbsolutePath();
-                toolBar.setjTextFieldLeft("");
-                toolBar.setjTextFieldRight(State.NEW.getDisplayName());
-                appFrame.setTitle("Simple Draw: " + selectedFile.getName());
-            } else {
-                System.out.println("Anulowano wybór pliku.");
-                return; // Przerwij działanie metody, jeśli użytkownik anulował wybór pliku
-            }
-
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-                drawPanel.loadPanel(drawPanel, ois);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Logic.open(this);
         }
-        if (actionEvent.getSource() == menu.getQuit()){
-            Logic.quit();
-        }
-
-        if (actionEvent.getSource() == menu.getCircle()) {
-            Logic.circle(drawPanel);
-            toolBar.setjTextFieldLeft("Circle");
-        }
-        if (actionEvent.getSource() == menu.getSquare()) {
-            Logic.square(drawPanel);
-            toolBar.setjTextFieldLeft("Square");
-        }
-        if (actionEvent.getSource() == menu.getPen()) {
-            Logic.line(drawPanel);
-            toolBar.setjTextFieldLeft("Pen");
-        }
-        if (actionEvent.getSource() == menu.getClear()) {
-            drawPanel.resetPanel();
-        }
-        if (actionEvent.getSource() == menu.getColor()) {
-            Color color = JColorChooser.showDialog(null, "Wybierz kolor", Color.BLACK);
-            drawPanel.setColorOfPen(color);
-        }
-
         if (actionEvent.getSource() == menu.getSave()){
             if (filePath == ""){
                 // Tworzymy nowy obiekt JFileChooser
@@ -131,6 +82,33 @@ public class AppFrame implements ActionListener {
 
 
         }
+
+
+        if (actionEvent.getSource() == menu.getQuit()){
+            Logic.quit();
+        }
+
+        if (actionEvent.getSource() == menu.getCircle()) {
+            Logic.circle(drawPanel);
+            toolBar.setjTextFieldLeft("Circle");
+        }
+        if (actionEvent.getSource() == menu.getSquare()) {
+            Logic.square(drawPanel);
+            toolBar.setjTextFieldLeft("Square");
+        }
+        if (actionEvent.getSource() == menu.getPen()) {
+            Logic.line(drawPanel);
+            toolBar.setjTextFieldLeft("Pen");
+        }
+        if (actionEvent.getSource() == menu.getClear()) {
+            drawPanel.resetPanel();
+        }
+        if (actionEvent.getSource() == menu.getColor()) {
+            Color color = JColorChooser.showDialog(null, "Wybierz kolor", Color.BLACK);
+            drawPanel.setColorOfPen(color);
+        }
+
+
         if (actionEvent.getSource() == menu.getSaveAs()) {
             // Tworzymy nowy obiekt JFileChooser
             JFileChooser fileChooser = new JFileChooser();
@@ -162,5 +140,45 @@ public class AppFrame implements ActionListener {
 
 
 
+    }
+
+    public JFrame getAppFrame() {
+        return appFrame;
+    }
+
+    public void setAppFrame(JFrame appFrame) {
+        this.appFrame = appFrame;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public ToolBar getToolBar() {
+        return toolBar;
+    }
+
+    public void setToolBar(ToolBar toolBar) {
+        this.toolBar = toolBar;
+    }
+
+    public DrawPanel getDrawPanel() {
+        return drawPanel;
+    }
+
+    public void setDrawPanel(DrawPanel drawPanel) {
+        this.drawPanel = drawPanel;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

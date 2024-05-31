@@ -127,7 +127,7 @@ public class DrawPanel extends JPanel {
     }
 
     public void loadPanel(DrawPanel drawPanel, ObjectInputStream loadedPanelRaw) {
-        DrawPanel loadedPanel = null;
+        DrawPanel loadedPanel;
         try {
             loadedPanel = (DrawPanel) loadedPanelRaw.readObject();
         } catch (IOException e) {
@@ -146,10 +146,6 @@ public class DrawPanel extends JPanel {
     public Color getRandomColor() {
         Random random = new Random();
         return new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-    }
-
-    public WhatIsPainting getWhatIsPainting() {
-        return whatIsPainting;
     }
 
     public void setWhatIsPainting(WhatIsPainting whatIsPainting) {
@@ -190,14 +186,6 @@ public class DrawPanel extends JPanel {
 
     public void setOrderOfPainting(List<Object> orderOfPainting) {
         this.orderOfPainting = orderOfPainting;
-    }
-
-    public Color getColorOfPen() {
-        return colorOfPen;
-    }
-
-    public ToolBar getToolBar() {
-        return toolBar;
     }
 
     public void setToolBar(ToolBar toolBar) {

@@ -86,103 +86,40 @@ public class Menu {
         }
     }
 
-    public void setAppMenu(JMenuBar appMenu) {
-        this.appMenu = appMenu;
-    }
-
-    public JMenu getFileMenu() {
-        return fileMenu;
-    }
-
-    public void setFileMenu(JMenu fileMenu) {
-        this.fileMenu = fileMenu;
-    }
-
     public JMenuItem getOpen() {
         return open;
-    }
-
-    public void setOpen(JMenuItem open) {
-        this.open = open;
     }
 
     public JMenuItem getSave() {
         return save;
     }
 
-    public void setSave(JMenuItem save) {
-        this.save = save;
-    }
-
     public JMenuItem getSaveAs() {
         return saveAs;
-    }
-
-    public void setSaveAs(JMenuItem saveAs) {
-        this.saveAs = saveAs;
     }
 
     public JMenuItem getQuit() {
         return quit;
     }
 
-    public void setQuit(JMenuItem quit) {
-        this.quit = quit;
-    }
-
-    public JMenu getDrawMenu() {
-        return drawMenu;
-    }
-
-    public void setDrawMenu(JMenu drawMenu) {
-        this.drawMenu = drawMenu;
-    }
-
-    public JMenu getFigure() {
-        return figure;
-    }
-
-    public void setFigure(JMenu figure) {
-        this.figure = figure;
-    }
-
     public JMenuItem getColor() {
         return color;
-    }
-
-    public void setColor(JMenuItem color) {
-        this.color = color;
     }
 
     public JMenuItem getClear() {
         return clear;
     }
 
-    public void setClear(JMenuItem clear) {
-        this.clear = clear;
-    }
-
     public JRadioButtonMenuItem getCircle() {
         return circle;
-    }
-
-    public void setCircle(JRadioButtonMenuItem circle) {
-        this.circle = circle;
     }
 
     public JRadioButtonMenuItem getSquare() {
         return square;
     }
 
-    public void setSquare(JRadioButtonMenuItem square) {
-        this.square = square;
-    }
-
     public JRadioButtonMenuItem getPen() {
         return pen;
     }
 
-    public void setPen(JRadioButtonMenuItem pen) {
-        this.pen = pen;
-    }
 }
