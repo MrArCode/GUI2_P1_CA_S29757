@@ -71,7 +71,7 @@ public class AppFrame implements ActionListener {
             drawPanel.resetPanel();
         }
         if (actionEvent.getSource() == menu.getColor()) {
-            Color color = JColorChooser.showDialog(null, "Wybierz kolor", Color.BLACK);
+            Color color = JColorChooser.showDialog(null, "Choose color", Color.BLACK);
             drawPanel.setColorOfPen(color);
         }
 
@@ -82,32 +82,12 @@ public class AppFrame implements ActionListener {
         return appFrame;
     }
 
-    public void setAppFrame(JFrame appFrame) {
-        this.appFrame = appFrame;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
     public ToolBar getToolBar() {
         return toolBar;
     }
 
-    public void setToolBar(ToolBar toolBar) {
-        this.toolBar = toolBar;
-    }
-
     public DrawPanel getDrawPanel() {
         return drawPanel;
-    }
-
-    public void setDrawPanel(DrawPanel drawPanel) {
-        this.drawPanel = drawPanel;
     }
 
     public String getFilePath() {

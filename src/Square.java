@@ -1,14 +1,14 @@
 import java.awt.*;
 
 public class Square extends ThingToPaint {
-    private final int size = 50; // Stały rozmiar kwadratu
+    private final int size = 50;
 
     public Square(int x, int y, Color color) {
         super(x, y, color);
     }
 
     public Square() {
-        super(0, 0, Color.BLACK); // Domyślne wartości, mogą być dostosowane do potrzeb
+        super(0, 0, Color.BLACK);
     }
 
     public void draw(Graphics g) {
