@@ -52,7 +52,7 @@ public class AppFrame implements ActionListener {
         }
 
         if (actionEvent.getSource() == menu.getQuit()) {
-            Logic.quit();
+            Logic.quit(this);
         }
 
         if (actionEvent.getSource() == menu.getCircle()) {

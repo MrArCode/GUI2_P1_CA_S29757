@@ -82,8 +82,46 @@ public class Logic {
         }
     }
 
-    public static void quit(){
-        System.exit(0);
+    public static void quit(AppFrame appFrame){
+        if (appFrame.getFilePath().isEmpty()){
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to exit without saving?", "Save your progress", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) System.exit(0);
+
+            JFileChooser fileChooser = new JFileChooser();
+
+            int result = fileChooser.showSaveDialog(null);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                appFrame.setFilePath(selectedFile.getAbsolutePath());
+                appFrame.getAppFrame().setTitle("Simple Draw: " + selectedFile.getName());
+            } else {
+                JOptionPane.showMessageDialog(null,"You did not choose a file","File is not chosen",JOptionPane.PLAIN_MESSAGE);
+                return;
+            }
+
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(appFrame.getFilePath()))) {
+                oos.writeObject(appFrame.getDrawPanel());
+                appFrame.getToolBar().setjTextFieldRight(State.SAVED.getDisplayName());
+                System.exit(0);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to exit without saving?", "Save your progress", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }else {
+                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(appFrame.getFilePath()))) {
+                    oos.writeObject(appFrame.getDrawPanel());
+                    appFrame.getToolBar().setjTextFieldRight(State.SAVED.getDisplayName());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.exit(0);
+            }
+        }
     }
 
     public static void   circle(DrawPanel drawPanel){
