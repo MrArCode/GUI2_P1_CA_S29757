@@ -44,47 +44,14 @@ public class AppFrame implements ActionListener {
         if (actionEvent.getSource() == menu.getOpen()) {
             Logic.open(this);
         }
-        if (actionEvent.getSource() == menu.getSave()){
-            if (filePath == ""){
-                // Tworzymy nowy obiekt JFileChooser
-                JFileChooser fileChooser = new JFileChooser();
-
-                // Wyświetlamy okno dialogowe do wyboru pliku
-                int result = fileChooser.showSaveDialog(null);
-
-                // Sprawdzamy, czy użytkownik wybrał plik
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    // Pobieramy wybrany plik jako obiekt File
-                    File selectedFile = fileChooser.getSelectedFile();
-                    // Pobieramy ścieżkę do wybranego pliku
-                    filePath = selectedFile.getAbsolutePath();
-                    appFrame.setTitle("Simple Draw: " + selectedFile.getName());
-                } else {
-                    System.out.println("Anulowano wybór pliku.");
-                    return; // Przerwij działanie metody, jeśli użytkownik anulował wybór pliku
-                }
-
-                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-                    oos.writeObject(drawPanel);
-                    toolBar.setjTextFieldRight(State.SAVED.getDisplayName());
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }else {
-                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-                    oos.writeObject(drawPanel);
-                    toolBar.setjTextFieldRight(State.SAVED.getDisplayName());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-
+        if (actionEvent.getSource() == menu.getSave()) {
+            Logic.save(this);
+        }
+        if (actionEvent.getSource() == menu.getSaveAs()) {
+            Logic.saveAs(this);
         }
 
-
-        if (actionEvent.getSource() == menu.getQuit()){
+        if (actionEvent.getSource() == menu.getQuit()) {
             Logic.quit();
         }
 
@@ -107,37 +74,6 @@ public class AppFrame implements ActionListener {
             Color color = JColorChooser.showDialog(null, "Wybierz kolor", Color.BLACK);
             drawPanel.setColorOfPen(color);
         }
-
-
-        if (actionEvent.getSource() == menu.getSaveAs()) {
-            // Tworzymy nowy obiekt JFileChooser
-            JFileChooser fileChooser = new JFileChooser();
-
-            // Wyświetlamy okno dialogowe do wyboru pliku
-            int result = fileChooser.showSaveDialog(null);
-
-            // Sprawdzamy, czy użytkownik wybrał plik
-            if (result == JFileChooser.APPROVE_OPTION) {
-                // Pobieramy wybrany plik jako obiekt File
-                File selectedFile = fileChooser.getSelectedFile();
-                // Pobieramy ścieżkę do wybranego pliku
-                filePath = selectedFile.getAbsolutePath();
-                appFrame.setTitle("Simple Draw: " + selectedFile.getName());
-            } else {
-                System.out.println("Anulowano wybór pliku.");
-                return; // Przerwij działanie metody, jeśli użytkownik anulował wybór pliku
-            }
-
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-                oos.writeObject(drawPanel);
-                toolBar.setjTextFieldRight(State.SAVED.getDisplayName());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-
 
 
     }
