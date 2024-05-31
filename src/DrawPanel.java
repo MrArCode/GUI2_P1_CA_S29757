@@ -34,6 +34,29 @@ public class DrawPanel extends JPanel {
             public void mousePressed(MouseEvent e) {
                 if (deleteMode) {
                     selectShapeIfClicked(e.getPoint());
+                } else if (whatIsPainting == WhatIsPainting.LINE) {
+                    toolBar.setjTextFieldRight(State.MODIFIED.getDisplayName());
+                    currentLine = new ArrayList<>();
+                    currentLine.add(new MyPoint(e.getX(), e.getY(), colorOfPen));
+                    allLines.add(currentLine);
+                    orderOfPainting.add(currentLine);
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (whatIsPainting == WhatIsPainting.LINE) {
+                    currentLine = null;
+                }
+            }
+        });
+
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (whatIsPainting == WhatIsPainting.LINE && currentLine != null) {
+                    currentLine.add(new MyPoint(e.getX(), e.getY(), colorOfPen));
+                    repaint();
                 }
             }
         });
@@ -85,6 +108,7 @@ public class DrawPanel extends JPanel {
         });
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -94,12 +118,14 @@ public class DrawPanel extends JPanel {
                 ((ThingToPaint) obj).draw(g2d);
             } else if (obj instanceof List) {
                 List<MyPoint> line = (List<MyPoint>) obj;
-                g2d.setColor(line.get(0).getColor());
-                MyPoint previousPoint = line.get(0);
-                for (int i = 1; i < line.size(); i++) {
-                    MyPoint currentPoint = line.get(i);
-                    g2d.drawLine(previousPoint.x, previousPoint.y, currentPoint.x, currentPoint.y);
-                    previousPoint = currentPoint;
+                if (!line.isEmpty()) {
+                    g2d.setColor(line.get(0).getColor());
+                    MyPoint previousPoint = line.get(0);
+                    for (int i = 1; i < line.size(); i++) {
+                        MyPoint currentPoint = line.get(i);
+                        g2d.drawLine(previousPoint.x, previousPoint.y, currentPoint.x, currentPoint.y);
+                        previousPoint = currentPoint;
+                    }
                 }
             }
         }
