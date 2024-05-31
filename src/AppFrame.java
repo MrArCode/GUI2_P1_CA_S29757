@@ -41,33 +41,10 @@ public class AppFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == menu.getQuit()){
-            Logic.quit();
-        }
-
-        if (actionEvent.getSource() == menu.getCircle()) {
-            Logic.circle(drawPanel);
-            toolBar.setjTextFieldLeft("Circle");
-        }
-        if (actionEvent.getSource() == menu.getSquare()) {
-            Logic.square(drawPanel);
-            toolBar.setjTextFieldLeft("Square");
-        }
-        if (actionEvent.getSource() == menu.getPen()) {
-            Logic.line(drawPanel);
-            toolBar.setjTextFieldLeft("Pen");
-        }
-        if (actionEvent.getSource() == menu.getClear()) {
-            drawPanel.resetPanel();
-        }
-        if (actionEvent.getSource() == menu.getColor()) {
-            Color color = JColorChooser.showDialog(null, "Wybierz kolor", Color.BLACK);
-            drawPanel.setColorOfPen(color);
-        }
         if (actionEvent.getSource() == menu.getOpen()) {
             // Tworzymy nowy obiekt JFileChooser
             JFileChooser fileChooser = new JFileChooser();
-            String filePath = "";
+            filePath = "";
 
             // Wyświetlamy okno dialogowe do wyboru pliku
             int result = fileChooser.showOpenDialog(null);
@@ -92,6 +69,30 @@ public class AppFrame implements ActionListener {
                 e.printStackTrace();
             }
         }
+        if (actionEvent.getSource() == menu.getQuit()){
+            Logic.quit();
+        }
+
+        if (actionEvent.getSource() == menu.getCircle()) {
+            Logic.circle(drawPanel);
+            toolBar.setjTextFieldLeft("Circle");
+        }
+        if (actionEvent.getSource() == menu.getSquare()) {
+            Logic.square(drawPanel);
+            toolBar.setjTextFieldLeft("Square");
+        }
+        if (actionEvent.getSource() == menu.getPen()) {
+            Logic.line(drawPanel);
+            toolBar.setjTextFieldLeft("Pen");
+        }
+        if (actionEvent.getSource() == menu.getClear()) {
+            drawPanel.resetPanel();
+        }
+        if (actionEvent.getSource() == menu.getColor()) {
+            Color color = JColorChooser.showDialog(null, "Wybierz kolor", Color.BLACK);
+            drawPanel.setColorOfPen(color);
+        }
+
         if (actionEvent.getSource() == menu.getSave()){
             if (filePath == ""){
                 // Tworzymy nowy obiekt JFileChooser

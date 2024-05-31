@@ -41,7 +41,6 @@ public class DrawPanel extends JPanel {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                toolBar.setjTextFieldRight(State.MODIFIED.getDisplayName());
                 if (e.getKeyCode() == KeyEvent.VK_F1) {
                     Point mousePosition = MouseInfo.getPointerInfo().getLocation();
                     SwingUtilities.convertPointFromScreen(mousePosition, DrawPanel.this);
@@ -57,6 +56,7 @@ public class DrawPanel extends JPanel {
                         thingToPaint.add(circle);
                         orderOfPainting.add(circle);
                     }
+                    toolBar.setjTextFieldRight(State.MODIFIED.getDisplayName());
                     repaint();
                 }
                 if (e.getKeyCode() == KeyEvent.VK_D) {
@@ -75,10 +75,10 @@ public class DrawPanel extends JPanel {
                                 thingToPaint.remove(shape);
                                 orderOfPainting.remove(shape);
                             }
-                            toolBar.setjTextFieldRight(State.MODIFIED.getDisplayName());
                             selectedShapes.clear();
                             repaint();
                         }
+                        toolBar.setjTextFieldRight(State.MODIFIED.getDisplayName());
                     }
                 }
             }
