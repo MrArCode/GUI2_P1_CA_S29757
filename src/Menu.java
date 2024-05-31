@@ -20,6 +20,7 @@ public class Menu {
     private JRadioButtonMenuItem circle;
     private JRadioButtonMenuItem square;
     private JRadioButtonMenuItem pen;
+    private ButtonGroup buttonGroup;
 
     private AppFrame appFrame;
 
@@ -61,7 +62,7 @@ public class Menu {
         figure.add(square);
         figure.add(pen);
 
-        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup = new ButtonGroup();
         buttonGroup.add(circle);
         buttonGroup.add(square);
         buttonGroup.add(pen);
@@ -122,4 +123,11 @@ public class Menu {
         return pen;
     }
 
+    public ButtonGroup getButtonGroup() {
+        return buttonGroup;
+    }
+
+    public void setButtonGroup(ButtonGroup buttonGroup) {
+        this.buttonGroup = buttonGroup;
+    }
 }

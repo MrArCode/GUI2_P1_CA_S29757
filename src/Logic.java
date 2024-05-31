@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 
 public class Logic {
@@ -20,6 +21,7 @@ public class Logic {
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(appFrame.getFilePath()))) {
             appFrame.getDrawPanel().loadPanel(appFrame.getDrawPanel(), ois);
+            appFrame.getMenu().getButtonGroup().clearSelection();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,5 +96,6 @@ public class Logic {
 
     public static void  line(DrawPanel drawPanel){
         drawPanel.setWhatIsPainting(WhatIsPainting.LINE);
+        drawPanel.setColorOfPen(Color.BLACK);
     }
 }

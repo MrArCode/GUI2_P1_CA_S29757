@@ -97,4 +97,8 @@ public class AppFrame implements ActionListener {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
+
+    public Menu getMenu() {
+        return menu;
+    }
 }
